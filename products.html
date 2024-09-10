@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/logo.jpeg" type="image/x-icon">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+    <!-- Stylesheet Link -->
+    <link rel="stylesheet" href="style.css">
+
+    <title>Products</title>
+    <style>
+        .video-container {
+            position: relative;
+            max-width: 100%;
+            height: auto;
+            margin: auto;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-container video {
+            max-width: 100%;
+            max-height: 100vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center horizontally */
+            justify-content: center; /* Center vertically */
+            min-height: 100vh; /* Full viewport height */
+            padding: 20px;
+        }
+
+        .main-content {
+            width: 100%; /* Full width to avoid overflow issues */
+            max-width: 1200px; /* Adjust as needed */
+        }
+
+        .featured-product {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 20px;
+        }
+
+        .featured-product > div {
+            border: 1px solid #ccc;
+            padding: 15px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .featured-image {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .buynow, .add-to-cart {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #023E8A;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .buynow:hover, .add-to-cart:hover {
+            background-color: #ffffff;
+            color: #023E8A;
+        }
+
+        .featured-product-row {
+            margin-bottom: 250px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <!-- Video Section -->
+        <div class="video-container">
+            <video src="assets/images/add.mp4" autoplay loop playsinline controls>
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <main class="main-content">
+            <div id="featured">
+                <h2>Featured Products</h2>
+                <p>Our products are being loved by our customers.</p>
+
+                <!-- First row of featured products -->
+                <div class="featured-product featured-product-row">
+                    <div class="featured-one">
+                        <img src="assets/images/15.jpeg" alt="Product 1" class="featured-image">
+                        <div class="featured-description">
+                            <p>
+                                Aroma Emporium.
+                                <br>
+                                <b>Offer Price:</b> <del>₹1,500</del> ₹999
+                            </p>
+                        </div>
+                        <a href="payment.html?price=999" class="buynow">Buy Now</a>
+                        <button class="add-to-cart" onclick="addToCart('Product 1', 'assets/images/15.jpeg', 999)">Add to Cart</button>
+                    </div>
+                    <div class="featured-two">
+                        <img src="assets/images/13.jpeg" alt="Product 2" class="featured-image">
+                        <div class="featured-description">
+                            <p>
+                                Aroma Emporium.
+                                <br>
+                                <b>Offer Price:</b> <del>₹2,000</del> ₹1,500
+                            </p>
+                        </div>
+                        <a href="payment.html?price=1500" class="buynow">Buy Now</a>
+                        <button class="add-to-cart" onclick="addToCart('Product 2', 'assets/images/13.jpeg', 1500)">Add to Cart</button>
+                    </div>
+                    <div class="featured-three">
+                        <img src="assets/images/10.jpeg" alt="Product 3" class="featured-image">
+                        <div class="featured-description">
+                            <p>
+                                Aroma Emporium.
+                                <br>
+                                <b>Offer Price:</b> <del>₹1,200</del> ₹990
+                            </p>
+                        </div>
+                        <a href="payment.html?price=990" class="buynow">Buy Now</a>
+                        <button class="add-to-cart" onclick="addToCart('Product 3', 'assets/images/10.jpeg', 990)">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Second row of featured products -->
+                <div class="featured-product featured-product-row">
+                    <div class="featured-four">
+                        <img src="assets/images/2.jpeg" alt="Product 4" class="featured-image">
+                        <div class="featured-description">
+                            <p>
+                                Aroma Emporium.
+                                <br>
+                                <b>Offer Price:</b> <del>₹2,999</del> ₹2,500
+                            </p>
+                        </div>
+                        <a href="payment.html?price=2500" class="buynow">Buy Now</a>
+                        <button class="add-to-cart" onclick="addToCart('Product 4', 'assets/images/2.jpeg', 2500)">Add to Cart</button>
+                    </div>
+                    <div class="featured-five">
+                        <img src="assets/images/1.jpeg" alt="Product 5" class="featured-image">
+                        <div class="featured-description">
+                            <p>
+                                Aroma Emporium.
+                                <br>
+                                <b>Offer Price:</b> <del>₹2,000</del> ₹1,600
+                            </p>
+                        </div>
+                        <a href="payment.html?price=1600" class="buynow">Buy Now</a>
+                        <button class="add-to-cart" onclick="addToCart('Product 5', 'assets/images/1.jpeg', 1600)">Add to Cart</button>
+                    </div>
+                    <div class="featured-six">
+                        <img src="assets/images/12.jpeg" alt="Product 6" class="featured-image">
+                        <div class="featured-description">
+                            <p>
+                                Aroma Emporium.
+                                <br>
+                                <b>Offer Price:</b> <del>₹1,600</del> ₹999
+                            </p>
+                        </div>
+                        <a href="payment.html?price=999" class="buynow">Buy Now</a>
+                        <button class="add-to-cart" onclick="addToCart('Product 6', 'assets/images/12.jpeg', 999)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="site-footer">Copyright &copy;2024 | All rights reserved</footer>
+    </div>
+
+    <script>
+        function addToCart(name, image, price) {
+            let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+            const existingItemIndex = cart.findIndex(item => item.name === name);
+
+            if (existingItemIndex !== -1) {
+                cart[existingItemIndex].quantity += 1;
+            } else {
+                cart.push({ name, image, price, quantity: 1 });
+            }
+
+            localStorage.setItem('cartItems', JSON.stringify(cart));
+            alert("Successfully added to cart");
+        }
+    </script>
+</body>
+
+</html>
+
