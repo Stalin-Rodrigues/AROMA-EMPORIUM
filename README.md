@@ -1,7 +1,7 @@
 # AROMA-EMPORIUM
 SFIT Third Year MINI-PROJECT
 
-Created by Lenin, Aaron, Stalin, Jigar, Faizan.
+Created by using Web-Technologies
 
 To View our Project:
 https://stalin-rodrigues.github.io/AROMA-EMPORIUM/
