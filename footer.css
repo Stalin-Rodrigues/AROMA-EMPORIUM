@@ -76,19 +76,3 @@ footer {
         margin-bottom: 20px;
     }
 }
-.social-icons li {
-    display: inline;
-    margin-right: 15px;
-}
-
-.social-icons li a {
-    font-size: 24px; /* adjust the font size to your liking */
-}
-
-.social-icons li a:hover {
-    color: #f4a261;
-}
-
-.fa-brands {
-    font-size: 24px; /* adjust the font size to your liking */
-}
