@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/logo.jpeg" type="image/x-icon">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+    />
+    
+    <!-- Stylesheet Link -->
+    <link rel="stylesheet" href="style.css">
+    <title>AROMA EMPORIUM</title>
+    <style>
+       /* Profile Image Container */
+        .profile-container {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+
+        /* Profile Image Styles */
+        .profile-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .profile-options {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-options img {
+            width: 100px;
+            height: 100px;
+            border-radius: 5px;
+        }
+
+        .profile-options input {
+            margin-top: 10px;
+        }
+
+        .profile-options label {
+            display: block;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .profile-options.active {
+            display: block;
+        }
+		        /* Featured Product Buttons */
+        .buynow,
+        .add-to-cart {
+            display: block;
+            margin-top: 10px;
+            padding: 10px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .buynow {
+            background-color: #023E8A;
+        }
+
+        .buynow:hover {
+            background-color: #021e6b;
+        }
+
+        .add-to-cart {
+            background-color: #023E8A;
+        }
+
+        .add-to-cart:hover {
+            background-color: #021e6b;
+        }
+
+        /* Featured Product Layout */
+        .featured-product {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .featured-one,
+        .featured-two,
+        .featured-three {
+            flex: 1;
+            margin: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .featured-image {
+            width: 100%;
+            height: auto;
+        }
+
+        .featured-description {
+            margin-top: 10px;
+        }
+
+    </style>
+	 
+    <script>
+        // Function to toggle profile options
+        function toggleProfileOptions() {
+            const profileOptions = document.getElementById("profileOptions");
+            profileOptions.classList.toggle("active");
+        }
+
+        // Function to change profile image and show alert
+        function changeProfileImage(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                // Change the profile image source
+                document.getElementById("userImage").src = e.target.result;
+
+                // Show alert message
+                alert("Image changed successfully");
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</head>
+
+<body>
+     <div class="profile-container">
+        <img src="assets/images/images.jpg" alt="Profile" class="profile-image" onclick="toggleProfileOptions()">
+        <div class="profile-options" id="profileOptions">
+            <img id="userImage" src="assets/images/images.jpg" alt="User Profile">
+            <input type="file" id="imageUpload" accept="image/*" style="display: none;" onchange="changeProfileImage(event)">
+            <label for="imageUpload" class="change-image-button">Change Image</label>
+        </div>
+    </div>
+    <div class="wrapper">
+        <main class="main-content">
+            <!-- Hero Section -->
+            <div id="hero" class="hero">
+                <h1>AROMA EMPORIUM</h1>
+                <p>A Fragrance as rare as you.</p>
+            </div>
+
+            <!-- Navbar -->
+            <div class="navbar">
+                <div class="nav-item">
+                    <ul>
+                        <li><a href="#hero"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="#featured"><i class="fa fa-fire"></i> Featured</a></li>
+                        <li><a href="products.html"><i class="fa fa-spray-can"></i> Products</a></li>
+                        <li><a href="#testimonial"><i class="fa fa-quote-left"></i> Testimonial</a></li>
+                        <li><a href="contact.html"><i class="fas fa-address-card"></i> Contact</a></li>
+						<li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Featured Products Section -->
+            <div id="featured">
+                <h2>Featured Products</h2>
+                <p>Our products are being loved by our customers.</p>
+                <div class="featured-product">
+                    <div class="featured-one">
+                        <img src="assets/images/14.jpeg" alt="" class="featured-image">
+                        <div class="featured-description">
+                            <p>
+                                Aroma Emporium.
+                                <br>
+                                <b>Offer Price:</b> <del>₹3,999</del> ₹2,500
+                                <br>
+                            </p>
+                        </div>
+                        <a href="payment.html?price=2500" class="buynow">Buy Now</a>
+                        <button class="add-to-cart" onclick="addToCart('Product 1', 'assets/images/14.jpeg', 2500)">Add to Cart</button>
+                    </div>
+                    <div class="featured-two">
+                        <img src="assets/images/2.jpeg" alt="" class="featured-image">
+                        <div class="featured-description">
+                            <p>
+                                Aroma Emporium.
+                                <br>
+                                <b>Offer Price:</b> <del>₹2,990</del> ₹1,999
+                                <br>
+                            </p>
+                        </div>
+                        <a href="payment.html?price=1999" class="buynow">Buy Now</a>
+                        <button class="add-to-cart" onclick="addToCart('Product 2', 'assets/images/2.jpeg', 1999)">Add to Cart</button>
+                    </div>
+                    <div class="featured-three">
+                        <img src="assets/images/4.jpeg" alt="" class="featured-image">
+                        <div class="featured-description">
+                            <p>
+                                Aroma Emporium.
+                                <br>
+                                <b>Offer Price:</b> <del>₹1,400</del> ₹990
+                                <br>
+                            </p>
+                        </div>
+                        <a href="payment.html?price=990" class="buynow">Buy Now</a>
+                        <button class="add-to-cart" onclick="addToCart('Product 3', 'assets/images/4.jpeg', 990)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Icon Box Section -->
+            <div class="icon-box-section">
+                <div class="icon1 icon">
+                    <i class="fas fa-globe-americas"></i>
+                    <h3>All Over India</h3>
+                    <p>At Aroma Emporium, we’re delighted to bring our exquisite collection of perfumes right to your doorstep,
+                        no matter where you are in India. Our commitment to delivering high-quality fragrances across the country ensures
+                        that you can enjoy the luxury of our products from the comfort of your home.</p>
+                </div>
+                <div class="icon2 icon">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h3>Replacement within 7 days</h3>
+                    <p>At Aroma Emporium, we are committed to ensuring your complete satisfaction with every purchase.
+                        If you encounter any issues with your order,
+                        our Replacement Policy makes it easy and hassle-free to get a replacement within 7 days of receiving your product.</p>
+                </div>
+                <div class="icon3 icon">
+                    <i class="fas fa-shipping-fast"></i>
+                    <h3>Fast & Free Shipping</h3>
+                    <p>At Aroma Emporium, we believe that shopping for your favorite perfumes should be a delightful experience from start to finish.
+                        That’s why we offer Fast & Free Shipping on all orders across India!</p>
+                </div>
+            </div>
+
+            <!-- Products Section -->
+            <div id="products">
+                <h2>Our Best Product</h2>
+                <p>We provide the best products for our customers.</p>
+                <div class="products-grid">
+                    <img src="assets/images/4.jpeg">
+                    <img src="assets/images/6.jpeg">
+                    <img src="assets/images/3.jpeg">
+                    <div class="second-grid">
+                        <img src="assets/images/7.jpeg">
+                        <img src="assets/images/10.jpeg">
+                        <img src="assets/images/8.jpeg">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial Section -->
+            <div id="testimonial">
+                <h2>What Our Clients Say</h2>
+                <p>We provide the best products for our customers.</p>
+                <div class="customers customer1">
+                    <i class="fas fa-quote-left quote-icon"></i>
+                    <img src="assets/images/customer1.jpg" alt="Customer 1">
+                    <h3>Aaron Rodrigues</h3>
+                    <p>"Aroma Emporium’s fragrances are exceptional. The 'Elegance' line is my favorite, with its long-lasting and captivating scent. I highly recommend their products for anyone seeking high-quality perfumes."</p>
+                    <i class="fas fa-quote-right quote-icon"></i>
+                </div>
+                <div class="customers customer2">
+                    <i class="fas fa-quote-left quote-icon"></i>
+                    <img src="assets/images/customer2.png" alt="Customer 2">
+                    <h3>Lilly Lobo</h3>
+                    <p>"I’m impressed with Aroma Emporium's attention to detail. The 'Vintage Collection' offers unique and memorable fragrances. Their eco-friendly packaging is a bonus, making it a great choice for fragrance lovers."</p>
+                    <i class="fas fa-quote-right quote-icon"></i>
+                </div>
+                <div class="customers customer3">
+                    <i class="fas fa-quote-left quote-icon"></i>
+                    <img src="assets/images/customer3.png" alt="Customer 3">
+                    <h3>Sana Khan</h3>
+                    <p>"Aroma Emporium’s perfumes are sophisticated and elegant. The 'Signature Scents' collection is impressive, offering a unique experience. The eco-friendly packaging aligns with my values, making it a top pick."</p>
+                    <i class="fas fa-quote-right quote-icon"></i>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+    
+            <div class="row primary">
+              <div class="column about">
+                <h3>Company Name</h3>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae,
+                  voluptatem corporis error non, corrupti delectus unde, incidunt
+                  dolorem quam porro tenetur autem? Maxime aspernatur quas, natus
+                  nesciunt harum obcaecati voluptatum.
+                </p>
+              </div>
+              <div class="column links">
+                <h3>Quick Links</h3>
+                <ul>
+                  <li>
+                    <a href="home.html">Home</a>
+                  </li>
+                  <li>
+                    <a href="products.html">Products</a>
+                  </li>
+                  <li>
+                    <a href="contact.html">Contact Us</a>
+                  </li>
+                  <!-- <li>
+                    <a href="#support">Support</a>
+                  </li>
+                  <li>
+                    <a href="#careers">Careers</a>
+                  </li> -->
+                </ul>
+              </div>
+              <div class="column subscribe">
+                <h3>Subscribe</h3>
+                <div>
+                  <input type="email" placeholder="Your email id here" />
+                  <button>Subscribe</button>
+                </div>
+                <div class="social">
+                  <i class="fa-brands fa-facebook-square"></i>
+                  <i class="fa-brands fa-instagram-square"></i>
+                  <i class="fa-brands fa-twitter-square"></i>
+                </div>
+              </div>
+            </div>
+      
+            <div class="row secondary">
+              <div>
+                <p>
+                  <i class="fas fa-phone-alt"></i>
+                </p>
+                <p>+91 1234567890</p>
+              </div>
+              <div>
+                <p><i class="fas fa-envelope"></i></p>
+                <p>aromaemporium@gmail.com</p>
+              </div>
+              <div>
+                <p><i class="fas fa-map-marker-alt"></i></p>
+                <p>Borivali West</p>
+              </div>
+            </div>
+            <div class="row copyright">
+              <p>Copyright &copy; 2024 | All Rights Reserved</p>
+            </div>
+            <link rel="stylesheet" href="footer.css" />
+          </footer>
+    </div>
+    <script>
+
+
+    
+        function addToCart(name, image, price) {
+            let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+            const existingItemIndex = cart.findIndex(item => item.name === name);
+
+            if (existingItemIndex !== -1) {
+                cart[existingItemIndex].quantity += 1;
+            } else {
+                cart.push({ name, image, price, quantity: 1 });
+            }
+
+            localStorage.setItem('cartItems', JSON.stringify(cart));
+            alert("Successfully added to cart");
+        }
+    </script>
+</body>
+
+</html>
