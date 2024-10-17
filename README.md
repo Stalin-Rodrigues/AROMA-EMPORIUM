@@ -1,5 +1,5 @@
 # AROMA-EMPORIUM
-SFIT Third Year MINI-PROJECT
+SFIT Third Year  Sem 5 MINI-PROJECT
 
 Created by using Web-Technologies
 
