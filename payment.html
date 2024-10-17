@@ -6,17 +6,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
     <link rel="shortcut icon" href="assets/images/logo.jpeg" type="image/x-icon">
+
     <!-- FontAwesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
     <!-- Stylesheet Link -->
     <link rel="stylesheet" href="style.css">    
     <!-- custom css file link  -->
     <link rel="stylesheet" href="payment.css">
+    <!-- jsPDF Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script>
-        function handleSubmit(event) {
+        async function handleSubmit(event) {
             event.preventDefault(); // Prevent page refresh
+
+            // Get the form data
+            const formData = {
+                fullName: document.querySelector('input[placeholder="john deo"]').value,
+                email: document.querySelector('input[placeholder="example@example.com"]').value,
+                address: document.querySelector('input[placeholder="room - street - locality"]').value,
+                city: document.querySelector('input[placeholder="mumbai"]').value,
+                state: document.querySelector('input[placeholder="maharashtra"]').value,
+                zipCode: document.querySelector('input[placeholder="123 456"]').value,
+                cardName: document.querySelector('input[placeholder="mr. john deo"]').value,
+                cardNumber: document.querySelector('input[placeholder=" "]').value,
+                expMonth: document.querySelector('input[placeholder="january"]').value,
+                expYear: document.querySelector('input[placeholder=" "]').value,
+                cvv: document.querySelector('input[placeholder=" "]').value
+            };
+
+            const productDetails = {
+                companyName: "Aroma Emporium", // Default company name
+                price: "₹999" // Default price (you can change this to your actual price)
+            };
+
+            // Display a success message
             alert('Payment successful! Thank you for your purchase.');
-            window.location.href = 'home.html'; // Redirect to home.html after alert
+
+            // Generate and download PDF with user data
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.text("Payment Receipt", 10, 10);
+            doc.text(`Full Name: ${formData.fullName}`, 10, 20);
+            doc.text(`Email: ${formData.email}`, 10, 30);
+            doc.text(`Address: ${formData.address}, ${formData.city}, ${formData.state} - ${formData.zipCode}`, 10, 40);
+            doc.text(`Name on Card: ${formData.cardName}`, 10, 50);
+            doc.text(`Credit Card Number: ${formData.cardNumber}`, 10, 60);
+            doc.text(`Expiration: ${formData.expMonth}, ${formData.expYear}`, 10, 70);
+            doc.text(`CVV: ${formData.cvv}`, 10, 80);
+            doc.text(`Product: ${productDetails.companyName}`, 10, 90); // Add company name to PDF
+            doc.text(`Price: ${productDetails.price}`, 10, 100); // Add product price to PDF
+
+            // Download the PDF
+            doc.save('payment_receipt.pdf');
+
+            // Redirect to home.html after downloading the PDF
+            setTimeout(() => {
+                window.location.href = 'home.html';
+            }, 3000); // Redirect after 3 seconds
         }
     </script>
 </head>
@@ -101,6 +148,9 @@
         <input type="submit" value="proceed to checkout" class="submit-btn">
 
     </form>
+
+    <!-- Div to display user data -->
+    <div id="user-data"></div>
 
 </div>    
     
