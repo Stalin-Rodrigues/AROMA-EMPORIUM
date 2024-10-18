@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- Favicon -->
     <link rel="shortcut icon" href="assets/images/logo.jpeg" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AROMA EMPORIUM</title>
+    <title>AROMA EMPORIUM - Sign In</title>
     <style>
         * {
             padding: 0;
@@ -89,7 +88,7 @@
 <body>
     <div class="container">
         <h1 class="label">Sign In</h1>
-        <form class="login_form" method="post" name="form" onsubmit="return validated()">
+        <form class="login_form" method="post" action="sign.php" onsubmit="return validated()">
             <div class="font">Email</div>
             <input autocomplete="off" type="text" name="email" id="email">
             <div id="email_error">Please fill up your Email</div>
@@ -126,4 +125,4 @@
         }
     </script>
 </body>
-</html>  
+</html>
