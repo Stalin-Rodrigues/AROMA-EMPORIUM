@@ -1,0 +1,165 @@
+<?php
+if (isset($_POST['submit'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Database connection variables
+    $host = 'localhost';
+    $user = 'root';
+    $pass = '';
+    $dbname = 'test1';
+
+    // Create a database connection
+    $conn = new mysqli($host, $user, $pass, $dbname);
+
+    // Check the connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Prepare and bind to prevent SQL injection
+    $stmt = $conn->prepare("INSERT INTO users (email, password) VALUES (?, ?)");
+    $stmt->bind_param("ss", $email, $password);
+
+    // Execute the statement
+    if ($stmt->execute()) {
+        echo "<script>alert('Registration successful!');</script>";
+    } else {
+        echo "<script>alert('Error: " . $stmt->error . "');</script>";
+    }
+
+    // Close the statement and connection
+    $stmt->close();
+    $conn->close();
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/logo.jpeg" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AROMA EMPORIUM</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: url('assets/images/black.jpg');
+            height: 100vh;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: sans-serif;
+            background-repeat: no-repeat;
+        }
+        .container {
+            width: 450px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .label {
+            text-align: center;
+            font-size: 35px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .login_form {
+            display: flex;
+            flex-direction: column;
+        }
+        .login_form .font {
+            font-size: 18px;
+            color: white;
+            margin-bottom: 8px;
+        }
+        .login_form input {
+            height: 40px;
+            padding: 5px 10px;
+            font-size: 18px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+        .login_form button {
+            height: 45px;
+            font-size: 20px;
+            color: white;
+            background: #1A237E;
+            border-radius: 3px;
+            border: 1px solid #3949AB;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .login_form button:hover {
+            background: #151c6a;
+        }
+        .login_form #email_error,
+        .login_form #pass_error {
+            margin-top: 5px;
+            font-size: 16px;
+            color: #C62828;
+            background: rgba(255,0,0,0.1);
+            text-align: center;
+            padding: 5px 8px;
+            border-radius: 3px;
+            border: 1px solid #EF9A9A;
+            display: none;
+        }
+        @media only screen and (max-width: 767px) {
+            .container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="label">Sign In</h1>
+        <form class="login_form" method="post" name="form" onsubmit="return validated()">
+            <div class="font">Email</div>
+            <input autocomplete="off" type="text" name="email" id="email">
+            <div id="email_error">Please fill up your Email</div>
+            <div class="font">Password</div>
+            <input type="password" name="password" id="password">
+            <div id="pass_error">Please fill up your Password</div>
+            <button type="submit" name="submit">Sign In</button>
+        </form>
+    </div>
+    <script>
+        function validated() {
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            const email_error = document.getElementById('email_error');
+            const pass_error = document.getElementById('pass_error');
+
+            let isValid = true;
+
+            if (email.value.trim() === "") {
+                email_error.style.display = 'block';
+                isValid = false;
+            } else {
+                email_error.style.display = 'none';
+            }
+
+            if (password.value.trim() === "") {
+                pass_error.style.display = 'block';
+                isValid = false;
+            } else {
+                pass_error.style.display = 'none';
+            }
+
+            return isValid;
+        }
+    </script>
+</body>
+</html>
