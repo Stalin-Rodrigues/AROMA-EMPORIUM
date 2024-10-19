@@ -2,14 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="assets/images/logo.jpeg" type="image/x-icon">
     <title>AROMA EMPORIUM</title>
     <style>
         * {
             padding: 0;
             margin: 0;
-            box-sizing: border-box;
         }
         body {
             background: url('assets/images/black.jpg');
@@ -23,92 +21,100 @@
         }
         .container {
             position: relative;
-            margin-top: 100px;
+            margin-top: 50px;
             width: 450px;
-            height: auto;
             background: black;
             opacity: 0.8;
             border-radius: 5px;
+            padding: 20px;
         }
         .label {
-            padding: 20px;
+            text-align: center;
             font-size: 35px;
             font-weight: bold;
-            text-align: center;
             color: white;
+            margin-bottom: 20px;
         }
-        .login_form {
-            padding: 20px 40px;
+        .form-group {
+            margin-bottom: 20px;
         }
-        .login_form .font {
+        .form-group label {
             font-size: 18px;
             color: white;
-            margin: 5px 0;
         }
-        .login_form input {
+        .form-group input {
+            width: 100%;
             height: 40px;
-            width: 100%;
-            padding: 0 5px;
+            padding: 0 10px;
             font-size: 18px;
-            margin-bottom: 10px;
-            outline: none;
+            margin-top: 5px;
+            border-radius: 5px;
             border: 1px solid silver;
-            border-radius: 3px;
         }
-        .login_form button {
-            height: 45px;
+        button {
             width: 100%;
+            height: 45px;
             font-size: 20px;
             color: white;
             background: #1A237E;
-            border-radius: 3px;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
-            font-weight: bold;
-            transition: 0.5s;
+            transition: background 0.3s;
+            margin-top: 10px;
         }
-        .login_form button:hover {
+        button:hover {
             background: #151c6a;
         }
-        .login_form #email_error,
-        .login_form #pass_error {
-            margin-top: 5px;
-            font-size: 18px;
+        .error-message {
             color: #C62828;
             background: rgba(255, 0, 0, 0.1);
-            text-align: center;
-            padding: 5px 8px;
-            border-radius: 3px;
             border: 1px solid #EF9A9A;
+            padding: 5px;
+            text-align: center;
             display: none;
-        }
-        @media only screen and (max-width: 767px) {
-            .container {
-                width: 90%;
-            }
+            margin-bottom: 10px;
         }
     </style>
     <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.4.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.4.1/firebase-auth.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1 class="label">Sign In</h1>
-        <form class="login_form" onsubmit="return validated()">
-            <div class="font">Email</div>
-            <input autocomplete="off" type="text" id="email" name="email">
-            <div id="email_error">Please fill up your Email</div>
-            <div class="font">Password</div>
-            <input type="password" id="password" name="password">
-            <div id="pass_error">Please fill up your Password</div>
+        <h1 class="label">Sign Up</h1>
+        <form id="signup_form" onsubmit="return signUp()">
+            <div class="form-group">
+                <label for="signup_email">Email</label>
+                <input type="text" id="signup_email" name="signup_email" required>
+            </div>
+            <div class="form-group">
+                <label for="signup_password">Password</label>
+                <input type="password" id="signup_password" name="signup_password" required>
+            </div>
+            <div class="error-message" id="signup_error">Error signing up. Please try again.</div>
+            <button type="submit">Sign Up</button>
+        </form>
+
+        <h1 class="label" style="margin-top: 30px;">Sign In</h1>
+        <form id="login_form" onsubmit="return signIn()">
+            <div class="form-group">
+                <label for="login_email">Email</label>
+                <input type="text" id="login_email" name="login_email" required>
+            </div>
+            <div class="form-group">
+                <label for="login_password">Password</label>
+                <input type="password" id="login_password" name="login_password" required>
+            </div>
+            <div class="error-message" id="login_error">Invalid email or password.</div>
             <button type="submit">Sign In</button>
         </form>
     </div>
+
     <script>
         // Your web app's Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyDaJPDBy_vQ6Fu824jkWQctg2kqdjr7B34",
+            apiKey: "YOUR_API_KEY",
             authDomain: "aroma-emporium.firebaseapp.com",
             projectId: "aroma-emporium",
             storageBucket: "aroma-emporium.appspot.com",
@@ -120,38 +126,38 @@
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
-        function validated() {
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value.trim();
-            let valid = true;
+        // Function to handle sign-up
+        function signUp() {
+            const email = document.getElementById('signup_email').value;
+            const password = document.getElementById('signup_password').value;
 
-            // Hide error messages
-            document.getElementById('email_error').style.display = 'none';
-            document.getElementById('pass_error').style.display = 'none';
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    alert('User signed up successfully');
+                    window.location.href = 'index.html'; // Redirect to home screen
+                })
+                .catch((error) => {
+                    document.getElementById('signup_error').style.display = 'block';
+                    document.getElementById('signup_error').textContent = error.message;
+                });
 
-            // Validate email
-            if (!email) {
-                document.getElementById('email_error').style.display = 'block';
-                valid = false;
-            }
+            return false; // Prevent form submission
+        }
 
-            // Validate password
-            if (!password) {
-                document.getElementById('pass_error').style.display = 'block';
-                valid = false;
-            }
+        // Function to handle sign-in
+        function signIn() {
+            const email = document.getElementById('login_email').value;
+            const password = document.getElementById('login_password').value;
 
-            // If validation is successful, proceed with Firebase authentication
-            if (valid) {
-                auth.signInWithEmailAndPassword(email, password)
-                    .then((userCredential) => {
-                        alert('Successfully Signed in');
-                        window.location.href = 'index.html'; // Redirect to home screen
-                    })
-                    .catch((error) => {
-                        alert(error.message);
-                    });
-            }
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    alert('Successfully signed in');
+                    window.location.href = 'index.html'; // Redirect to home screen
+                })
+                .catch((error) => {
+                    document.getElementById('login_error').style.display = 'block';
+                    document.getElementById('login_error').textContent = error.message;
+                });
 
             return false; // Prevent form submission
         }
