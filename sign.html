@@ -96,6 +96,9 @@
             }
         }
     </style>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js"></script>
 </head>
 <body>
     <div class="container">
@@ -111,6 +114,20 @@
         </form>
     </div>
     <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDaJPDBy_vQ6Fu824jkWQctg2kqdjr7B34",
+            authDomain: "aroma-emporium.firebaseapp.com",
+            projectId: "aroma-emporium",
+            storageBucket: "aroma-emporium.appspot.com",
+            messagingSenderId: "76555861783",
+            appId: "1:76555861783:web:92c48f43ea7d79fada8152"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
         function validated() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
@@ -132,10 +149,16 @@
                 valid = false;
             }
 
-            // If validation is successful, show alert and redirect
+            // If validation is successful, proceed with Firebase authentication
             if (valid) {
-                alert('Successfully Signed in');
-                window.location.href = 'index.html'; // Redirect to home screen
+                auth.signInWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        alert('Successfully Signed in');
+                        window.location.href = 'index.html'; // Redirect to home screen
+                    })
+                    .catch((error) => {
+                        alert(error.message);
+                    });
             }
 
             return false; // Prevent form submission
