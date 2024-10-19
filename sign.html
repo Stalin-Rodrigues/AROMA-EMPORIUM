@@ -2,78 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="assets/images/logo.jpeg" type="image/x-icon">
-    <title>AROMA EMPORIUM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aroma Emporium - User Info</title>
     <style>
-        * {
-            padding: 0;
-            margin: 0;
-        }
         body {
-            background: url('assets/images/black.jpg');
-            height: 100%;
-            background-size: cover;
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-family: sans-serif;
-            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
         }
         .container {
-            position: relative;
-            margin-top: 50px;
-            width: 450px;
-            background: black;
-            opacity: 0.8;
-            border-radius: 5px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
-        }
-        .label {
             text-align: center;
-            font-size: 35px;
-            font-weight: bold;
-            color: white;
+            width: 90%;
+            max-width: 400px;
+        }
+        h1 {
+            color: #1A237E;
             margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            font-size: 18px;
-            color: white;
-        }
-        .form-group input {
-            width: 100%;
-            height: 40px;
-            padding: 0 10px;
-            font-size: 18px;
-            margin-top: 5px;
-            border-radius: 5px;
-            border: 1px solid silver;
         }
         button {
-            width: 100%;
-            height: 45px;
-            font-size: 20px;
-            color: white;
-            background: #1A237E;
+            background-color: #3949AB;
+            color: #fff;
             border: none;
             border-radius: 5px;
+            padding: 10px 20px;
             cursor: pointer;
-            transition: background 0.3s;
-            margin-top: 10px;
+            font-size: 16px;
+            margin-top: 20px;
         }
         button:hover {
-            background: #151c6a;
+            background-color: #303f9f;
+        }
+        .user-info {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .user-info p {
+            background: #f1f1f1;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
         }
         .error-message {
-            color: #C62828;
-            background: rgba(255, 0, 0, 0.1);
-            border: 1px solid #EF9A9A;
-            padding: 5px;
-            text-align: center;
-            display: none;
-            margin-bottom: 10px;
+            color: red;
+            margin-top: 10px;
         }
     </style>
     <!-- Firebase SDKs -->
@@ -82,33 +62,13 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="label">Sign Up</h1>
-        <form id="signup_form" onsubmit="return signUp()">
-            <div class="form-group">
-                <label for="signup_email">Email</label>
-                <input type="text" id="signup_email" name="signup_email" required>
-            </div>
-            <div class="form-group">
-                <label for="signup_password">Password</label>
-                <input type="password" id="signup_password" name="signup_password" required>
-            </div>
-            <div class="error-message" id="signup_error">Error signing up. Please try again.</div>
-            <button type="submit">Sign Up</button>
-        </form>
-
-        <h1 class="label" style="margin-top: 30px;">Sign In</h1>
-        <form id="login_form" onsubmit="return signIn()">
-            <div class="form-group">
-                <label for="login_email">Email</label>
-                <input type="text" id="login_email" name="login_email" required>
-            </div>
-            <div class="form-group">
-                <label for="login_password">Password</label>
-                <input type="password" id="login_password" name="login_password" required>
-            </div>
-            <div class="error-message" id="login_error">Invalid email or password.</div>
-            <button type="submit">Sign In</button>
-        </form>
+        <h1>User Information</h1>
+        <div id="user-info" class="user-info">
+            <p>Email: <span id="user-email">Not signed in</span></p>
+            <p>UID: <span id="user-uid">N/A</span></p>
+        </div>
+        <button id="sign-out-btn" style="display:none;">Sign Out</button>
+        <div id="error-message" class="error-message"></div>
     </div>
 
     <script>
@@ -118,49 +78,63 @@
             authDomain: "aroma-emporium.firebaseapp.com",
             projectId: "aroma-emporium",
             storageBucket: "aroma-emporium.appspot.com",
-            messagingSenderId: "76555861783",
-            appId: "1:76555861783:web:92c48f43ea7d79fada8152"
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
 
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
-        // Function to handle sign-up
-        function signUp() {
-            const email = document.getElementById('signup_email').value;
-            const password = document.getElementById('signup_password').value;
+        // Function to update user information on the page
+        function updateUserInfo(user) {
+            const userEmailElement = document.getElementById('user-email');
+            const userUIDElement = document.getElementById('user-uid');
+            const signOutBtn = document.getElementById('sign-out-btn');
+            const errorMessageElement = document.getElementById('error-message');
 
-            auth.createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    alert('User signed up successfully');
-                    window.location.href = 'index.html'; // Redirect to home screen
-                })
-                .catch((error) => {
-                    document.getElementById('signup_error').style.display = 'block';
-                    document.getElementById('signup_error').textContent = error.message;
-                });
-
-            return false; // Prevent form submission
+            if (user) {
+                userEmailElement.textContent = user.email || "No Email";
+                userUIDElement.textContent = user.uid;
+                signOutBtn.style.display = 'block';
+                errorMessageElement.textContent = '';
+            } else {
+                userEmailElement.textContent = 'Not signed in';
+                userUIDElement.textContent = 'N/A';
+                signOutBtn.style.display = 'none';
+            }
         }
 
-        // Function to handle sign-in
-        function signIn() {
-            const email = document.getElementById('login_email').value;
-            const password = document.getElementById('login_password').value;
+        // Handle authentication state changes
+        auth.onAuthStateChanged((user) => {
+            updateUserInfo(user);
+        });
 
-            auth.signInWithEmailAndPassword(email, password)
+        // Function to sign out the user
+        document.getElementById('sign-out-btn').addEventListener('click', () => {
+            auth.signOut().then(() => {
+                alert('Signed out successfully');
+            }).catch((error) => {
+                document.getElementById('error-message').textContent = error.message;
+            });
+        });
+
+        // Example sign-in function for testing purposes
+        function signInWithTestUser() {
+            const testEmail = "stalin2004@gmail.com";
+            const testPassword = "your_test_password"; // Replace with the test user's password
+
+            auth.signInWithEmailAndPassword(testEmail, testPassword)
                 .then((userCredential) => {
-                    alert('Successfully signed in');
-                    window.location.href = 'index.html'; // Redirect to home screen
+                    console.log('Signed in successfully:', userCredential.user);
                 })
                 .catch((error) => {
-                    document.getElementById('login_error').style.display = 'block';
-                    document.getElementById('login_error').textContent = error.message;
+                    document.getElementById('error-message').textContent = error.message;
                 });
-
-            return false; // Prevent form submission
         }
+
+        // Uncomment the following line to sign in with a test user automatically
+        // signInWithTestUser();
     </script>
 </body>
 </html>
